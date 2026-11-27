@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Nagarik App">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+  <title>Nagarik App – Government service at your finger tips</title>
+  <meta name="description" content="Nagarik App – access digital documents, social services and government services from your phone.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Nagarik App">
+  <meta property="og:description" content="Government service at your finger tips">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    :root {
+      --page: #edf1f7;
+      --ink: #17243b;
+      --brand: #0b3d91;
+      --bg: #edf1f7;
+      --card: #ffffff;
+      --txt: #27344a;
+      --mut: #8594ab;
+      --circ: #edf2f8;
+      color-scheme: light;
+      box-sizing: border-box
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--page);
+      color: var(--ink);
+      font-family: Poppins, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      -webkit-user-select: none;
+      user-select: none;
+      overscroll-behavior: none;
+      height: 100%
+    }
+
+    input,
+    textarea {
+      -webkit-user-select: text;
+      user-select: text
+    }
+
+    .stage {
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 20px 14px 0;
+      text-align: center
+    }
+
+    .t1 {
+      display: none
+    }
+
+    .t2 {
+      display: none
+    }
+
+    .phone {
+      margin: 0 auto;
+      width: 100%;
+      max-width: 390px;
+      background: #000;
+      border-radius: 44px;
+      padding: 8px;
+      border: 3px solid #1a2233;
+      box-shadow: 0 16px 50px rgba(0, 0, 0, .28)
+    }
+
+    .screen {
+      position: relative;
+      background: var(--bg);
+      border-radius: 36px;
+      height: 720px;
+      overflow: hidden;
+      text-align: left;
+      color: var(--txt)
+    }
+
+    .scroll {
+      height: 100%;
+      overflow-y: auto;
+      padding: 16px 14px 100px;
+      scrollbar-width: none
+    }
+
+    .scroll::-webkit-scrollbar {
+      display: none
+    }
+
+    /* QR Code Box & Framing matching reference image */
+    .dl-qr-wrap {
+      margin-top: 32px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center
+    }
+
+    .dl-qr-box {
+      background: #ffffff;
+      border-radius: 4px;
+      border: 1.5px solid #c8d0dc;
+      padding: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 270px;
+      height: 270px;
+      box-sizing: border-box
+    }
+
+    .dl-qr-img {
+      width: 258px;
+      height: 258px;
+      object-fit: contain;
+      display: block
+    }
+
+    .dl-scan-title {
+      margin-top: 10px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 1.2px;
+      color: #3a3a3a;
+      text-transform: uppercase;
+      font-family: Poppins, sans-serif
+    }
+
+    .cam {
+      display: none
+    }
+
+    /* Top bar: Blank outline avatar & clean search */
+    .top {
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .av {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #fff;
+      border: 1.5px solid #283e6b;
+      display: grid;
+      place-items: center;
+      flex: none;
+      padding: 0;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, .04)
+    }
+
+    .sr {
+      flex: 1;
+      background: #fff;
+      border-radius: 12px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, .04);
+      border: 0
+    }
+
+    .sr input {
+      flex: 1;
+      border: 0;
+      outline: 0;
+      background: none;
+      font: 400 12.5px Poppins, sans-serif;
+      color: var(--ink);
+      min-width: 0
+    }
+
+    .sr input::placeholder {
+      color: #8a9bb2
+    }
+
+    svg {
+      display: block
+    }
+
+    /* Top Banner */
+    .ban {
+      margin-top: 14px;
+      height: 148px;
+      border-radius: 14px;
+      overflow: hidden;
+      position: relative;
+      touch-action: pan-y;
+      box-shadow: 0 1px 6px rgba(20, 30, 80, .06)
+    }
+
+    .trk {
+      display: flex;
+      height: 100%;
+      transition: transform .45s ease
+    }
+
+    .sl {
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden
+    }
+
+    .ban-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block
+    }
+
+    .dots {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin: 8px 0 2px
+    }
+
+    .dots b {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #b9bbc9;
+      border: 0;
+      padding: 0;
+      cursor: pointer
+    }
+
+    .dots b.on {
+      background: var(--brand)
+    }
+
+    /* Section titles & white cards matching reference */
+    h2 {
+      font-size: 15px;
+      font-weight: 700;
+      margin: 18px 4px 10px;
+      color: var(--ink);
+      letter-spacing: -.1px
+    }
+
+    .g {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 18px 4px 8px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      row-gap: 14px;
+      box-shadow: 0 1px 4px rgba(20, 30, 60, .04);
+      border: 0
+    }
+
+    .it {
+      border: 0;
+      background: none;
+      font: 500 11.5px/1.2 Poppins, sans-serif;
+      color: #27344a;
+      cursor: pointer;
+      padding: 0 2px 6px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center
+    }
+
+    .ic {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--circ);
+      display: grid;
+      place-items: center;
+      margin: 0 auto 7px;
+      overflow: hidden
+    }
+
+    .ic svg {
+      width: 38px;
+      height: 38px
+    }
+
+    /* NID & Card Icon Thumbnails */
+    .ic.ic-img {
+      background: var(--circ);
+      box-shadow: none
+    }
+
+    .card-thumb {
+      width: 42px;
+      height: 27px;
+      object-fit: cover;
+      border-radius: 3px;
+      box-shadow: 0 1.5px 5px rgba(0, 0, 0, .16);
+      display: block
+    }
+
+    .passport-thumb {
+      width: 24px;
+      height: 33px;
+      object-fit: cover;
+      border-radius: 2px 4px 4px 2px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, .22);
+      display: block
+    }
+
+    .logo-thumb {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      display: block
+    }
+
+    .passport-frame {
+      aspect-ratio: 1/1.42 !important;
+      max-width: 270px;
+      margin: 0 auto;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(10, 25, 50, .22)
+    }
+
+    .citizenship-frame {
+      aspect-ratio: 1.35/1 !important
+    }
+
+    .none {
+      display: none;
+      text-align: center;
+      color: var(--mut);
+      font-size: 13px;
+      padding: 30px 0
+    }
+
+    .sheet {
+      position: absolute;
+      inset: 0;
+      background: var(--bg);
+      transform: translateX(100%);
+      transition: transform .3s;
+      z-index: 5;
+      overflow-y: auto;
+      padding: 0 16px 100px
+    }
+
+    .sheet.open {
+      transform: none
+    }
+
+    .bk {
+      border: 0;
+      background: none;
+      color: var(--brand);
+      font: 600 14px Poppins, sans-serif;
+      padding: 14px 0 10px;
+      cursor: pointer
+    }
+
+    /* Driving License Screen Styles (matching reference) */
+    .dl-screen {
+      background: #ffffff;
+      min-height: 100%;
+      margin: -16px -14px;
+      padding: 16px 14px 60px
+    }
+
+    .dl-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 0 10px
+    }
+
+    .dl-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+
+    .dl-back-btn {
+      border: 0;
+      background: none;
+      color: #17243b;
+      cursor: pointer;
+      padding: 4px 2px;
+      display: grid;
+      place-items: center
+    }
+
+    .dl-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #17243b;
+      font-family: Poppins, sans-serif
+    }
+
+    .dl-right-icon {
+      display: grid;
+      place-items: center;
+      color: #253f6b;
+      padding: 4px
+    }
+
+    /* Balanced tabs matching reference image */
+    .dl-tabs {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      margin-top: 12px;
+      border-bottom: 1.5px solid #edf1f8;
+      width: 100%
+    }
+
+    .dl-tab {
+      text-align: center;
+      padding: 6px 14px 10px;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: #7b8a9e;
+      cursor: pointer;
+      position: relative;
+      white-space: nowrap
+    }
+
+    .dl-tab.active {
+      color: #17243b;
+      font-weight: 600
+    }
+
+    .dl-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1.5px;
+      left: 0;
+      right: 0;
+      height: 2.5px;
+      background: #0b3d91;
+      border-radius: 2px
+    }
+
+    .dl-info-box {
+      background: #e9f2fd;
+      border-radius: 10px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 14px
+    }
+
+    .dl-info-text {
+      font-size: 11.5px;
+      color: #1a3666;
+      line-height: 1.42;
+      font-weight: 400
+    }
+
+    /* License Card Frame - Clean card proportion matching reference */
+    .dl-card-frame {
+      width: 100%;
+      margin-top: 14px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 3px 12px rgba(15, 25, 60, 0.1);
+      border: 1px solid #d0d8e4;
+      background: #ffffff;
+    }
+
+    .dl-card-frame img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* QR Code Box & Framing matching reference image */
+    .dl-qr-wrap {
+      margin-top: 32px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center
+    }
+
+    .dl-qr-box {
+      background: #ffffff;
+      border-radius: 4px;
+      border: 1.5px solid #c8d0dc;
+      padding: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 270px;
+      height: 270px;
+      box-sizing: border-box
+    }
+
+    .dl-qr-img {
+      width: 258px;
+      height: 258px;
+      object-fit: contain;
+      display: block
+    }
+
+    .dl-scan-title {
+      margin-top: 10px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 1.2px;
+      color: #3a3a3a;
+      text-transform: uppercase;
+      font-family: Poppins, sans-serif
+    }
+
+    /* Violation records view */
+    .dl-violation-empty {
+      text-align: center;
+      padding: 50px 20px;
+      color: #8594ab
+    }
+
+    .dl-violation-empty svg {
+      margin: 0 auto 12px;
+      display: block
+    }
+
+    /* Buffer animation */
+    .dl-spinner {
+      width: 28px;
+      height: 28px;
+      border: 2.5px solid #e1e7f5;
+      border-top-color: #0b3d91;
+      border-radius: 50%;
+      animation: dl-spin .65s linear infinite
+    }
+
+    @keyframes dl-spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    /* NID Section / Frame (Clean template, NO dummy data) */
+    .nid-frame-wrap {
+      margin-top: 10px;
+      text-align: center
+    }
+
+    .nid-frame-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 0 0 16px;
+      text-align: left
+    }
+
+    .nid-card-frame {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(15, 25, 60, .16);
+      border: 1px solid #cdd5e4;
+      background: #fff;
+      aspect-ratio: 1.64/1
+    }
+
+    .nid-card-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block
+    }
+
+    .msg {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 26px 18px;
+      text-align: center;
+      box-shadow: 0 1px 8px rgba(20, 20, 60, .06);
+      margin-top: 10px
+    }
+
+    .msg .ic {
+      width: 72px;
+      height: 72px;
+      margin-bottom: 12px
+    }
+
+    .msg .ic svg {
+      width: 54px;
+      height: 54px
+    }
+
+    .msg h3 {
+      margin: 0 0 6px;
+      font-size: 17px
+    }
+
+    .msg p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--mut)
+    }
+
+    /* Bottom Navigation */
+    .nav {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: calc(72px + env(safe-area-inset-bottom, 0px));
+      background: #fff;
+      display: grid;
+      grid-template-columns: 1fr 1fr 88px 1fr 1fr;
+      align-items: start;
+      padding-top: 10px;
+      box-shadow: 0 -3px 18px rgba(20, 30, 70, .08);
+      border-radius: 24px 24px 0 0;
+      z-index: 6
+    }
+
+    .nb {
+      border: 0;
+      background: none;
+      color: #8a9bb2;
+      font: 500 10.5px Poppins, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      padding: 2px 0;
+      cursor: pointer
+    }
+
+    .nb svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round
+    }
+
+    .nb.on {
+      color: #0b3d91;
+      font-weight: 600
+    }
+
+    .mid {
+      position: absolute;
+      left: 50%;
+      top: -30px;
+      transform: translateX(-50%);
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      border: 6px solid #fff;
+      background: #0b3d91;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 -2px 10px rgba(10, 25, 60, .12), 0 6px 16px rgba(11, 61, 145, .28);
+      cursor: pointer;
+      padding: 0
+    }
+
+    .mid svg {
+      width: 25px;
+      height: 25px;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round
+    }
+
+    /* 100% PWA & Mobile Native App Mode */
+    @media (max-width:500px),
+    (display-mode:standalone) {
+
+      html,
+      body {
+        background: var(--bg);
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%
+      }
+
+      .stage {
+        padding: 0;
+        max-width: none;
+        margin: 0;
+        width: 100%
+      }
+
+      .t1,
+      .t2,
+      .cam {
+        display: none !important
+      }
+
+      .phone {
+        margin: 0;
+        max-width: none;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        padding: 0;
+        background: none;
+        box-shadow: none;
+        border: 0
+      }
+
+      .screen {
+        height: 100vh;
+        height: 100dvh;
+        border-radius: 0;
+        width: 100%;
+        background: var(--bg)
+      }
+
+      .scroll {
+        padding-top: max(14px, env(safe-area-inset-top, 0px));
+        padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+        padding-left: 14px;
+        padding-right: 14px
+      }
+
+      .nav {
+        padding-bottom: env(safe-area-inset-bottom, 0px)
+      }
+
+      .status {
+        display: none
+      }
+    }
+  </style>
+
+  <style id="shield-css">
+    img { -webkit-user-drag: none; user-drag: none; -webkit-touch-callout: none; pointer-events: none }
+    button img, .it img { pointer-events: none }
+    body.shielded .stage { filter: blur(28px) brightness(.6); transition: filter .05s }
+    @media print { html, body { display: none !important } }
+  </style>
+</head>
+
+<body>
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <symbol id="sid" viewBox="0 0 44 44">
+        <rect x="4" y="9" width="36" height="26" rx="4" fill="#fff" stroke="#9db4ea" stroke-width="1.5" />
+        <rect x="4" y="9" width="36" height="7" rx="3" fill="#3552c8" />
+        <circle cx="15" cy="25" r="4.5" fill="#f1c7a2" />
+        <path d="M8 33c1-5 12-5 14 0z" fill="#3552c8" />
+        <path d="M26 22h10M26 26h10M26 30h7" stroke="#b7c4ee" stroke-width="2" stroke-linecap="round" />
+      </symbol>
+      <symbol id="sct" viewBox="0 0 44 44">
+        <rect x="4" y="9" width="36" height="26" rx="4" fill="#f4ecd6" stroke="#d9c58f" stroke-width="1.5" />
+        <rect x="8" y="14" width="11" height="14" rx="2" fill="#c9a96a" />
+        <path d="M23 15h13M23 20h13M23 25h9" stroke="#b79a5d" stroke-width="2" stroke-linecap="round" />
+        <rect x="4" y="31" width="36" height="4" rx="2" fill="#c0392b" />
+      </symbol>
+      <symbol id="spy" viewBox="0 0 44 44">
+        <rect x="4" y="9" width="36" height="26" rx="4" fill="#fde7d4" stroke="#f0b98d" stroke-width="1.5" />
+        <rect x="4" y="9" width="36" height="8" rx="3" fill="#e8812f" />
+        <rect x="9" y="21" width="12" height="9" rx="2" fill="#f6c59b" />
+        <path d="M26 22h10M26 27h8" stroke="#e8a46b" stroke-width="2" stroke-linecap="round" />
+      </symbol>
+      <symbol id="scr" viewBox="0 0 44 44">
+        <path d="M9 6h20l7 7v25H9z" fill="#f6e8b8" stroke="#d6bd6c" stroke-width="1.5" />
+        <path d="M14 17h16M14 22h16" stroke="#cfae4e" stroke-width="2" stroke-linecap="round" />
+        <circle cx="26" cy="32" r="5" fill="#b8532b" />
+        <path d="M23 36l-2 5 5-2 5 2-2-5" fill="#b8532b" />
+      </symbol>
+      <symbol id="shb" viewBox="0 0 44 44">
+        <rect x="9" y="4" width="26" height="36" rx="3" fill="#1f5d42" />
+        <rect x="9" y="4" width="4" height="36" fill="#174a34" />
+        <circle cx="23" cy="19" r="7" fill="none" stroke="#d6b45a" stroke-width="2" />
+        <path d="M19 19h8M23 15v8" stroke="#d6b45a" stroke-width="1.5" />
+        <path d="M16 31h14" stroke="#d6b45a" stroke-width="2" stroke-linecap="round" />
+      </symbol>
+      <symbol id="sfm" viewBox="0 0 44 44">
+        <rect x="4" y="9" width="36" height="26" rx="4" fill="#fff" stroke="#c9ccdc" stroke-width="1.5" />
+        <rect x="8" y="14" width="10" height="12" rx="2" fill="#dfe3f3" />
+        <path d="M22 16h14M22 21h14M22 26h9" stroke="#c9ccdc" stroke-width="2" stroke-linecap="round" />
+        <path d="M26 30l3 3 6-6" fill="none" stroke="#2e9a54" stroke-width="2.5" stroke-linecap="round" />
+        <circle cx="35" cy="14" r="3" fill="#d9363e" />
+      </symbol>
+      <symbol id="swl" viewBox="0 0 44 44">
+        <circle cx="22" cy="22" r="15" fill="#fff" stroke="#e0733a" stroke-width="2.5" />
+        <circle cx="22" cy="22" r="9" fill="#2b2f6b" />
+        <path d="M22 7v5M22 32v5M7 22h5M32 22h5M11 11l3.5 3.5M29.5 29.5L33 33M33 11l-3.5 3.5M14.5 29.5L11 33"
+          stroke="#e0733a" stroke-width="3" stroke-linecap="round" />
+        <path d="M17 22h10M22 17v10" stroke="#fff" stroke-width="2" />
+      </symbol>
+      <symbol id="spf" viewBox="0 0 44 44">
+        <circle cx="22" cy="22" r="17" fill="#fff" stroke="#3a57c4" stroke-width="2.5" />
+        <circle cx="22" cy="22" r="12" fill="#e6ecff" stroke="#3a57c4" stroke-width="1.2" />
+        <path d="M13 29h18M15 29V20M20 29V20M25 29V20M30 29V20M12 20h20L22 13z" fill="none" stroke="#3a57c4"
+          stroke-width="1.6" stroke-linejoin="round" />
+      </symbol>
+      <symbol id="sin" viewBox="0 0 44 44">
+        <circle cx="22" cy="22" r="17" fill="#fff" stroke="#2a78c9" stroke-width="2.5" />
+        <circle cx="22" cy="22" r="12" fill="#e1f0fc" />
+        <path d="M22 11l9 3v7c0 6-4 9-9 11-5-2-9-5-9-11v-7z" fill="#2a78c9" />
+        <path d="M18 21l3 3 5-6" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" />
+      </symbol>
+      <symbol id="sno" viewBox="0 0 44 44">
+        <circle cx="22" cy="22" r="17" fill="#fff" stroke="#c9792a" stroke-width="2.5" />
+        <path d="M12 20v5h5l9 5V15l-9 5zM30 19a5 5 0 0 1 0 7" fill="#f2b36f" stroke="#c9792a" stroke-width="1.8"
+          stroke-linejoin="round" stroke-linecap="round" />
+      </symbol>
+      <symbol id="sdr" viewBox="0 0 44 44">
+        <circle cx="22" cy="22" r="17" fill="#fff" stroke="#2e8b57" stroke-width="2.5" />
+        <rect x="13" y="10" width="18" height="24" rx="3" fill="#dff3e7" stroke="#2e8b57" stroke-width="1.8" />
+        <circle cx="22" cy="18" r="3.5" fill="#2e8b57" />
+        <path d="M16.5 28c1-4 10-4 11 0" fill="none" stroke="#2e8b57" stroke-width="2" />
+      </symbol>
+      <symbol id="shd" viewBox="0 0 44 44">
+        <circle cx="22" cy="22" r="17" fill="#fff" stroke="#6a44c9" stroke-width="2.5" />
+        <path d="M13 22a9 9 0 0 1 18 0v3H13z" fill="#e9e2fa" stroke="#6a44c9" stroke-width="1.8" />
+        <rect x="11" y="23" width="5" height="8" rx="2" fill="#6a44c9" />
+        <rect x="28" y="23" width="5" height="8" rx="2" fill="#6a44c9" />
+      </symbol>
+    </defs>
+  </svg>
+
+  <div class="stage">
+    <div class="t1">Get Started with</div>
+    <div class="t2">Office App</div>
+    <div class="phone">
+      <div class="screen">
+        <div class="scroll" id="home">
+          <div class="status"><span>14:15</span><span class="cam"></span>
+            <svg width="46" height="12" viewBox="0 0 46 12">
+              <path d="M1 10h2V7H1zM5 10h2V5H5zM9 10h2V3H9z" fill="currentColor" />
+              <path d="M16 4a6 6 0 0 1 8 0M18 6.5a3 3 0 0 1 4 0" stroke="currentColor" stroke-width="1.4" fill="none"
+                stroke-linecap="round" />
+              <rect x="28" y="1" width="17" height="10" rx="3" fill="#3aa856" />
+            </svg>
+          </div>
+          <div class="top">
+            <button class="av" onclick="openSheet('Profile','sid')" aria-label="Profile"><svg viewBox="0 0 32 32"
+                width="22" height="22" fill="#8f9eb6">
+                <circle cx="16" cy="11" r="5.5" />
+                <path d="M7 26.5c0-4.8 4.2-8 9-8s9 3.2 9 8z" />
+              </svg></button>
+            <label class="sr"><input id="q" placeholder="Search for a service" autocomplete="off"><svg width="17"
+                height="17" viewBox="0 0 24 24" fill="none" stroke="#8a9bb2" stroke-width="2" stroke-linecap="round">
+                <circle cx="11" cy="11" r="7" />
+                <path d="M20 20l-4-4" />
+              </svg></label>
+          </div>
+          <div class="ban" id="ban">
+            <div class="trk" id="trk"></div>
+          </div>
+          <div class="dots" id="dots"></div>
+          <div id="secs"></div>
+          <div class="none" id="none">No service found</div>
+        </div>
+        <div class="sheet" id="sheet"></div>
+        <div class="nav">
+          <button class="nb on" data-t="home" onclick="tab('home')"><svg viewBox="0 0 24 24">
+              <path style="fill:#0b3d91;stroke:#0b3d91;stroke-width:1.5"
+                d="M12 3l7.5 4.8v9.7a2.7 2.7 0 0 1-2.7 2.7H7.2a2.7 2.7 0 0 1-2.7-2.7V7.8z" />
+              <rect x="10.2" y="13" width="3.6" height="3.6" rx="1" style="fill:#fff;stroke:none" />
+            </svg>Home</button>
+          <button class="nb" data-t="doc" onclick="tab('doc')"><svg viewBox="0 0 24 24">
+              <path
+                d="M9 6.5V5a1 1 0 0 1 1-1h5l3.5 3.5V15M5.5 9h6l3.5 3.5V20a1 1 0 0 1-1 1h-8.5a1 1 0 0 1-1-1V10a1 1 0 0 1 1-1zM8 15h5M8 18h3" />
+            </svg>Document</button>
+          <span></span>
+          <button class="nb" data-t="not" onclick="tab('not')"><svg viewBox="0 0 24 24">
+              <path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.6 1.9H4.4zM10 20.4a2 2 0 0 0 4 0" />
+            </svg>Notification</button>
+          <button class="nb" data-t="act" onclick="tab('act')"><svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="9" />
+              <rect x="8.8" y="11.4" width="6.4" height="5" rx="1.2" />
+              <path d="M10.2 11.4V10a1.8 1.8 0 0 1 3.6 0v1.4" />
+            </svg>Activity</button>
+          <button class="mid" onclick="openId()" aria-label="National ID"><svg viewBox="0 0 24 24">
+              <path
+                d="M7 3H5a2 2 0 0 0-2 2v2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2" />
+              <rect x="8" y="8" width="3" height="3" rx=".6" />
+              <rect x="13" y="8" width="3" height="3" rx=".6" />
+              <rect x="8" y="13" width="3" height="3" rx=".6" />
+              <path d="M14 14h2v2h-2z" />
+            </svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var S = [
+      ["Documents", [["National ID", "nid-card.jpg"], ["Driving License", "license-card.jpg"], ["PAN", "pan-card.jpg"], ["Citizenship", "citizenship.jpg"], ["Passport", "passport.jpg"], ["Voter ID", "voter-id.png"]]],
+      ["Social Service", [["CIT", "cit.png"], ["Provident Fund", "provident-fund.jpg"], ["SSF", "ssf.jpg"]]],
+      ["Other Services", [["Notices", "sno"], ["Directory", "sdr"], ["Help Desk", "shd"]]]];
+
+    function ic(i) {
+      if (i.indexOf('.') > -1) {
+        var cls = 'card-thumb';
+        if (i.indexOf('passport') > -1) cls = 'passport-thumb';
+        else if (i.indexOf('cit.png') > -1 || i.indexOf('ssf') > -1 || i.indexOf('provident') > -1 || i.indexOf('voter') > -1) cls = 'logo-thumb';
+        return '<div class="ic ic-img"><img src="' + i + '" class="' + cls + '" alt=""></div>';
+      }
+      return '<div class="ic"><svg><use href="#' + i + '"/></svg></div>';
+    }
+
+    function draw(f) {
+      var h = '', any = false;
+      S.forEach(function (g) {
+        var it = g[1].filter(function (x) { return x[0].toLowerCase().indexOf(f) > -1 });
+        if (!it.length) return; any = true;
+        h += '<h2>' + g[0] + '</h2><div class="g">' + it.map(function (x) { return '<button class="it" onclick="openItem(\'' + x[0] + '\',\'' + x[1] + '\')">' + ic(x[1]) + x[0] + '</button>' }).join('') + '</div>';
+      });
+      document.getElementById('secs').innerHTML = h;
+      document.getElementById('none').style.display = any ? 'none' : 'block';
+    }
+    draw('');
+    document.getElementById('q').oninput = function () { draw(this.value.trim().toLowerCase()) };
+    var slides = [
+      '<div class="sl"><img src="banner1.png" class="ban-img" alt="प्रहरी रिपोर्ट नागरिक एप"></div>',
+      '<div class="sl"><img src="banner1.png" class="ban-img" alt="प्रहरी रिपोर्ट नागरिक एप"></div>'
+    ];
+    document.getElementById('trk').innerHTML = slides.join('');
+    var cur = 0, tm, db = document.getElementById('dots');
+    db.innerHTML = slides.map(function (_, i) { return '<b onclick="go(' + i + ')"></b>'; }).join('');
+    function go(i) {
+      cur = (i + slides.length) % slides.length;
+      document.getElementById('trk').style.transform = 'translateX(-' + cur * 100 + '%)';
+      [].forEach.call(db.children, function (d, k) { d.className = k === cur ? 'on' : ''; });
+      clearInterval(tm);
+      tm = setInterval(function () { go(cur + 1); }, 3800);
+    }
+    go(0);
+    var sx = null, bn = document.getElementById('ban');
+    bn.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX }, { passive: true });
+    bn.addEventListener('touchend', function (e) { if (sx === null) return; var d = e.changedTouches[0].clientX - sx; if (Math.abs(d) > 40) go(cur + (d < 0 ? 1 : -1)); sx = null });
+    var sh = document.getElementById('sheet');
+
+    function openItem(n, i) {
+      if (n === 'National ID') openId();
+      else if (n === 'Driving License') openLicense();
+      else if (n === 'PAN') openPan();
+      else if (n === 'Passport') openPassport();
+      else if (n === 'Citizenship') openCitizenship();
+      else openSheet(n, i);
+    }
+    function openSheet(n, i) { sh.innerHTML = '<button class="bk" onclick="closeSheet()">← Back</button><div class="msg">' + ic(i) + '<h3>' + n + '</h3><p>This service is coming soon.</p></div>'; sh.classList.add('open'); sh.scrollTop = 0 }
+    function setOn(n) { [].forEach.call(document.querySelectorAll('.nb'), function (b) { b.classList.toggle('on', b.dataset.t === n) }) }
+    function closeSheet() {
+      sh.classList.remove('open');
+      sh.style.background = '';
+      setOn('home');
+      var hm = document.getElementById('home');
+      if (hm) hm.style.display = '';
+      var nb = document.querySelector('.nav');
+      if (nb) nb.style.display = '';
+    }
+
+    /* Clean NID Frame */
+    function openId() {
+      sh.innerHTML =
+        '<button class="bk" onclick="closeSheet()">← Back</button>' +
+        '<div class="nid-frame-wrap">' +
+        '<div class="nid-frame-title">National Identity Card</div>' +
+        '<div class="nid-card-frame">' +
+        '<img src="nid-card.jpg" alt="National Identity Card">' +
+        '</div>' +
+        '</div>';
+      sh.classList.add('open');
+      sh.scrollTop = 0;
+    }
+
+    /* Driving License View with buffer animation matching reference */
+    function openLicense(tab) {
+      tab = tab || 'license';
+      var hm = document.getElementById('home');
+      if (hm) hm.style.display = 'none';
+      var nb = document.querySelector('.nav');
+      if (nb) nb.style.display = 'none';
+      sh.style.background = '#ffffff';
+      sh.innerHTML =
+        '<div class="dl-screen" style="display:flex;align-items:center;justify-content:center;height:55vh;">' +
+        '<div class="dl-spinner"></div>' +
+        '</div>';
+      sh.classList.add('open');
+      sh.scrollTop = 0;
+
+      setTimeout(function () {
+        renderDlScreen(tab);
+      }, 400);
+    }
+
+    function renderDlScreen(tab) {
+      tab = tab || 'license';
+      var isLicense = (tab === 'license');
+      var content = '';
+
+      if (isLicense) {
+        content =
+          '<div class="dl-info-box">' +
+          '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" style="flex:none;margin-top:2px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>' +
+          '<div class="dl-info-text">Below details are displayed as per your record in Department of Transport Management.</div>' +
+          '</div>' +
+          '<div class="dl-card-frame">' +
+          '<img src="driving-license-cropped.png?v=16" alt="Driving License">' +
+          '</div>' +
+          '<div class="dl-qr-wrap">' +
+          '<div class="dl-qr-box">' +
+          '<img src="qr-thin.png" alt="QR Code" class="dl-qr-img">' +
+          '</div>' +
+          '<div class="dl-scan-title">SCAN TO VIEW</div>' +
+          '</div>';
+      } else {
+        content =
+          '<div class="dl-violation-empty">' +
+          '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#8594ab" stroke-width="1.6" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><circle cx="12" cy="14" r="3"/><path d="M12 11v6"/></svg>' +
+          '<h4 style="margin:0 0 6px;color:#17243b;font-size:15px">No Violation Records</h4>' +
+          '<p style="margin:0;font-size:12.5px;color:#8594ab">There are no traffic violation records registered under this driving license.</p>' +
+          '</div>';
+      }
+
+      sh.innerHTML =
+        '<div class="dl-screen">' +
+        '<div class="dl-header">' +
+        '<div class="dl-header-left">' +
+        '<button class="dl-back-btn" onclick="closeSheet()">' +
+        '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>' +
+        '</button>' +
+        '<div class="dl-title">Driving License</div>' +
+        '</div>' +
+        '<div class="dl-right-icon">' +
+        '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#253f6b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M19 8l4 4m0-4l-4 4"/></svg>' +
+        '</div>' +
+        '</div>' +
+        '<div class="dl-tabs">' +
+        '<div class="dl-tab ' + (isLicense ? 'active' : '') + '" onclick="renderDlScreen(\'license\')">Driving License</div>' +
+        '<div class="dl-tab ' + (!isLicense ? 'active' : '') + '" onclick="renderDlScreen(\'violation\')">Violation Records</div>' +
+        '</div>' +
+        content +
+        '</div>';
+
+      if (isLicense) {
+        generateDlQr();
+      }
+    }
+
+    function generateDlQr() {
+      var el = document.getElementById('dl-qr');
+      if (!el) return;
+      el.innerHTML = '';
+      try {
+        if (typeof QRCode !== 'undefined') {
+          new QRCode(el, {
+            text: 'https://dotm.gov.np/',
+            width: 180,
+            height: 180,
+            colorDark: '#000000',
+            colorLight: '#ffffff',
+            correctLevel: QRCode.CorrectLevel.M
+          });
+        } else {
+          loadFallbackQr(el);
+        }
+      } catch (e) {
+        loadFallbackQr(el);
+      }
+    }
+
+    function loadFallbackQr(el) {
+      el.innerHTML = '<img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fdotm.gov.np%2F" width="180" height="180" alt="QR Code">';
+    }
+
+    /* Clean PAN Card Frame */
+    function openPan() {
+      sh.innerHTML =
+        '<button class="bk" onclick="closeSheet()">← Back</button>' +
+        '<div class="nid-frame-wrap">' +
+        '<div class="nid-frame-title">PAN Card</div>' +
+        '<div class="nid-card-frame">' +
+        '<img src="pan-card.jpg" alt="PAN Card">' +
+        '</div>' +
+        '</div>';
+      sh.classList.add('open');
+      sh.scrollTop = 0;
+    }
+
+    /* Clean Passport Frame */
+    function openPassport() {
+      sh.innerHTML =
+        '<button class="bk" onclick="closeSheet()">← Back</button>' +
+        '<div class="nid-frame-wrap">' +
+        '<div class="nid-frame-title">Passport</div>' +
+        '<div class="nid-card-frame passport-frame">' +
+        '<img src="passport.jpg" alt="Passport">' +
+        '</div>' +
+        '</div>';
+      sh.classList.add('open');
+      sh.scrollTop = 0;
+    }
+
+    /* Clean Citizenship Certificate Frame */
+    function openCitizenship() {
+      sh.innerHTML =
+        '<button class="bk" onclick="closeSheet()">← Back</button>' +
+        '<div class="nid-frame-wrap">' +
+        '<div class="nid-frame-title">Citizenship Certificate</div>' +
+        '<div class="nid-card-frame citizenship-frame">' +
+        '<img src="citizenship.jpg" alt="Citizenship Certificate">' +
+        '</div>' +
+        '</div>';
+      sh.classList.add('open');
+      sh.scrollTop = 0;
+    }
+
+    function tab(n) {
+      setOn(n);
+      if (n === 'home') { sh.classList.remove('open'); return }
+      if (n === 'doc') {
+        sh.innerHTML = '<button class="bk" onclick="closeSheet()">← Back</button><h2 style="margin-top:6px">Documents</h2><div class="g">' + S[0][1].map(function (x) { return '<button class="it" onclick="openItem(\'' + x[0] + '\',\'' + x[1] + '\')">' + ic(x[1]) + x[0] + '</button>' }).join('') + '</div>';
+        sh.classList.add('open'); sh.scrollTop = 0; return
+      }
+      var t = { not: ['Notification', 'sno'], act: ['Activity', 'spf'] }[n];
+      if (t) openSheet(t[0], t[1]);
+    }
+
+    if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./sw.js').catch(function () { }) }
+  </script>
+  <noscript>Please enable JavaScript to use Nagarik App.</noscript>
+
+  <script id="shield-js">
+    (function () {
+      var b = document.body;
+      function hide() { b.classList.add('shielded'); }
+      function show() { if (document.hasFocus() && !document.hidden) b.classList.remove('shielded'); }
+      // Blur content when the tab/app loses focus (snipping tools, app switcher, screen-share pickers)
+      window.addEventListener('blur', hide);
+      window.addEventListener('focus', show);
+      document.addEventListener('visibilitychange', function () { document.hidden ? hide() : show(); });
+      // Block right-click / long-press menu, drag, copy, save and print shortcuts
+      ['contextmenu', 'dragstart', 'copy', 'cut'].forEach(function (t) {
+        document.addEventListener(t, function (e) {
+          if (!/^(INPUT|TEXTAREA)$/.test((e.target || {}).tagName)) e.preventDefault();
+        });
+      });
+      document.addEventListener('keydown', function (e) {
+        var k = (e.key || '').toLowerCase();
+        var printScreen = k === 'printscreen' || e.keyCode === 44;
+        var combo = (e.ctrlKey || e.metaKey) && ['p', 's', 'u'].indexOf(k) > -1;
+        var macShot = e.metaKey && e.shiftKey && ['3', '4', '5'].indexOf(k) > -1;
+        var winShot = e.metaKey && e.shiftKey && k === 's';
+        if (printScreen || combo || macShot || winShot) {
+          e.preventDefault(); hide();
+          try { navigator.clipboard.writeText(' '); } catch (x) { }
+          setTimeout(show, 1500);
+        }
+      });
+      document.addEventListener('keyup', function (e) {
+        if ((e.key || '').toLowerCase() === 'printscreen') {
+          try { navigator.clipboard.writeText(' '); } catch (x) { }
+        }
+      });
+    })();
+  </script>
+</body>
+
+</html>
